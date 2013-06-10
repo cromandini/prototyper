@@ -5,21 +5,21 @@ var utils = require('./lib/utils');
 var Prototyper = module.exports = {
     /**
      * The name of this object.
-     * @usage All
+     * @usage Prototyper YES / Class YES / instance YES
      * @type {String}
      */
     objectName: 'Prototyper',
 
     /**
      * Whether this object is a class.
+     * @usage Prototyper YES / Class YES / instance YES
      * @type {Boolean}
-     * Usage: All
      */
     isClass: true,
 
     /**
      * Whether this object is an instance.
-     * @usage All
+     * @usage Prototyper YES / Class YES / instance YES
      * @getter
      * @return {String}
      */
@@ -29,7 +29,7 @@ var Prototyper = module.exports = {
 
     /**
      * The type of this object.
-     * @usage All
+     * @usage Prototyper YES / Class YES / instance YES
      * @getter
      * @return {String}
      */
@@ -39,7 +39,7 @@ var Prototyper = module.exports = {
 
     /**
      * The prototype of this object.
-     * @usage All
+     * @usage Prototyper YES / Class YES / instance YES
      * @type {Object}
      */
     super: Object.prototype,
@@ -48,7 +48,7 @@ var Prototyper = module.exports = {
      * Returns a string representing the value of this object.
      * The string is based on object type and name.
      * Examples: [Class Prototyper] [Class Person] [instance person-1]
-     * @usage All
+     * @usage Prototyper YES / Class YES / instance YES
      * @return {String}
      */
     toString: function toString() {
@@ -77,13 +77,13 @@ var Prototyper = module.exports = {
              * The name of the object.
              * @type {String}
              */
-            objectName: { value: name, enumerable: true },
+            objectName: { value: name },
 
             /**
              * Whether the object is a class.
              * @type {Boolean}
              */
-            isClass: { value: true, enumerable: true },
+            isClass: { value: true },
 
             /**
              * The prototype of the object.
@@ -218,7 +218,20 @@ var Prototyper = module.exports = {
     clone: function clone() {
         if (this.isClass) throw new TypeError('Object ' + this.toString() + ' cannot be cloned, try extend');
         return {};
+    },
+
+    /**
+     * Returns an object with static methods as defined in utils module.
+     * @usage Prototyper YES / Class NO / instance NO
+     * @getter
+     * @returns {Object}
+     */
+    get utils() {
+        if (this === Prototyper) return utils;
     }
 };
+
+Prototyper.defineProperty('super', { enumerable: false });
+Prototyper.defineProperty('utils', { enumerable: false });
 
 Object.freeze(Prototyper);

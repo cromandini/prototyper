@@ -4,7 +4,8 @@
 'use strict';
 
 var Prototyper = require('../Prototyper'),
-    expect = require('chai').expect;
+    expect = require('chai').expect,
+    utils = require('../lib/utils');
 
 describe('Prototyper', function () {
 
@@ -20,17 +21,26 @@ describe('Prototyper', function () {
         it('should be "Prototyper"', function () {
             expect(Prototyper.objectName).to.equal('Prototyper');
         });
+        it('should be enumerable', function () {
+            expect(Object.getOwnPropertyDescriptor(Prototyper, 'objectName').enumerable).to.be.true;
+        });
     });
 
     describe('#isClass', function () {
         it('should be true', function () {
             expect(Prototyper.isClass).to.be.true;
         });
+        it('should be enumerable', function () {
+            expect(Object.getOwnPropertyDescriptor(Prototyper, 'isClass').enumerable).to.be.true;
+        });
     });
 
     describe('#isInstance', function () {
         it('should be false', function () {
             expect(Prototyper.isInstance).to.be.false;
+        });
+        it('should be enumerable', function () {
+            expect(Object.getOwnPropertyDescriptor(Prototyper, 'isInstance').enumerable).to.be.true;
         });
     });
 
@@ -39,11 +49,17 @@ describe('Prototyper', function () {
         it('should be "' + expected + '"', function () {
             expect(Prototyper.objectType).to.equal(expected);
         });
+        it('should be enumerable', function () {
+            expect(Object.getOwnPropertyDescriptor(Prototyper, 'objectType').enumerable).to.be.true;
+        });
     });
 
     describe('#super', function () {
         it('should be Object.prototype', function () {
             expect(Prototyper.super).to.equal(Object.prototype);
+        });
+        it('should be non-enumerable', function () {
+            expect(Object.getOwnPropertyDescriptor(Prototyper, 'super').enumerable).to.be.false;
         });
     });
 
@@ -51,6 +67,9 @@ describe('Prototyper', function () {
         var expected = '[Class Prototyper]';
         it('should return ' + expected, function () {
             expect(Prototyper.toString()).to.equal(expected);
+        });
+        it('should be enumerable', function () {
+            expect(Object.getOwnPropertyDescriptor(Prototyper, 'toString').enumerable).to.be.true;
         });
     });
 
@@ -141,6 +160,9 @@ describe('Prototyper', function () {
             expect(descriptor.enumerable).to.be.true;
             expect(descriptor.configurable).to.be.false;
         });
+        it('should be enumerable', function () {
+            expect(Object.getOwnPropertyDescriptor(Prototyper, 'extend').enumerable).to.be.true;
+        });
     });
 
     describe('#create()', function () {
@@ -152,6 +174,9 @@ describe('Prototyper', function () {
                 Prototyper.create();
             }
         });
+        it('should be enumerable', function () {
+            expect(Object.getOwnPropertyDescriptor(Prototyper, 'create').enumerable).to.be.true;
+        });
     });
 
     describe('#defineIVar(property, descriptor)', function () {
@@ -162,6 +187,9 @@ describe('Prototyper', function () {
             function defineIVar() {
                 Prototyper.defineIVar('foo', { value: 2 });
             }
+        });
+        it('should be enumerable', function () {
+            expect(Object.getOwnPropertyDescriptor(Prototyper, 'defineIVar').enumerable).to.be.true;
         });
     });
 
@@ -177,6 +205,9 @@ describe('Prototyper', function () {
                 });
             }
         });
+        it('should be enumerable', function () {
+            expect(Object.getOwnPropertyDescriptor(Prototyper, 'defineIVars').enumerable).to.be.true;
+        });
     });
 
     describe('#defineProperty(property, descriptor)', function () {
@@ -189,6 +220,9 @@ describe('Prototyper', function () {
                     value: 2
                 });
             }
+        });
+        it('should be enumerable', function () {
+            expect(Object.getOwnPropertyDescriptor(Prototyper, 'defineProperty').enumerable).to.be.true;
         });
     });
 
@@ -204,6 +238,9 @@ describe('Prototyper', function () {
                 });
             }
         });
+        it('should be enumerable', function () {
+            expect(Object.getOwnPropertyDescriptor(Prototyper, 'defineProperties').enumerable).to.be.true;
+        });
     });
 
     describe('#mixin(source, options)', function () {
@@ -215,6 +252,9 @@ describe('Prototyper', function () {
                 Prototyper.mixin();
             }
         });
+        it('should be enumerable', function () {
+            expect(Object.getOwnPropertyDescriptor(Prototyper, 'mixin').enumerable).to.be.true;
+        });
     });
 
     describe('#clone()', function () {
@@ -225,6 +265,21 @@ describe('Prototyper', function () {
             function clone() {
                 Prototyper.clone();
             }
+        });
+        it('should be enumerable', function () {
+            expect(Object.getOwnPropertyDescriptor(Prototyper, 'clone').enumerable).to.be.true;
+        });
+    });
+
+    describe('#utils', function () {
+        it('should have static methods defined in utils module', function () {
+            expect(Prototyper.utils).to.equal(utils);
+            expect(Prototyper.utils.isObject).to.eql(utils.isObject);
+            expect(Prototyper.utils.mixProperties).to.eql(utils.mixProperties);
+            expect(Prototyper.utils.defineAllProperties).to.eql(utils.defineAllProperties);
+        });
+        it('should be non-enumerable', function () {
+            expect(Object.getOwnPropertyDescriptor(Prototyper, 'utils').enumerable).to.be.false;
         });
     });
 });
