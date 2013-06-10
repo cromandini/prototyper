@@ -8,24 +8,20 @@ module.exports = Prototyper.extend(
     // iVars
     {
         name: 'Unnamed',
-        age: 0,
         happiness: 10,
         happinessThreshold: 100
     },
     // cVars
     {
-        get isHappy() {
-            return this.happiness >= this.happinessThreshold;
-        },
-        initialize: function initialize(name, age) {
+        initialize: function initialize(name) {
             if (!name) throw new Error('name is required');
-            if (age) this.age = age;
+            this.name = name;
         },
         sayName: function sayName() {
             console.log('My name is ' + this.name);
         },
-        sayAge: function sayAge() {
-            console.log('I\'m ' + this.age + ' year' + ( this.age !== 1 ? 's' : '' ) + ' old');
+        get isHappy() {
+            return this.happiness >= this.happinessThreshold;
         },
         beHappier: function beHappier() {
             this.happiness += 10;
