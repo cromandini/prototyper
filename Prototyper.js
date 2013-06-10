@@ -95,21 +95,16 @@ var Prototyper = module.exports = {
              * Holds the instance properties.
              * @type {Object}
              */
-            iVars: {
-                value: {},
-                enumerable: true,
-                configurable: true
-            }
+            iVars: { value: {}, enumerable: true }
         });
+
         if (utils.isObject(iVars)) utils.mixProperties(object.iVars, iVars, { override: true });
         if (utils.isObject(cVars)) utils.mixProperties(object, cVars, { all: true, override: true, define: true });
-
         if (utils.isObject(descriptors)) {
             if (utils.isObject(descriptors.iVars)) Object.defineProperties(object.iVars, descriptors.iVars);
             if (utils.isObject(descriptors.cVars)) Object.defineProperties(object, descriptors.cVars);
         }
 
-        utils.defineAllProperties(object.iVars, { writable: false });
         return object;
     },
 
@@ -148,7 +143,7 @@ var Prototyper = module.exports = {
      */
     defineIVar: function defineIVar(property, descriptor) {
         if (this === Prototyper || this.isInstance) {
-            throw new TypeError('Object ' + Prototyper.toString() + ' does not make use of iVars');
+            throw new TypeError('Object ' + this.toString() + ' does not make use of iVars');
         }
         Object.defineProperty(this.iVars, property, descriptor);
         return this;

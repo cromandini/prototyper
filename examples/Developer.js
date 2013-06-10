@@ -5,7 +5,8 @@ var Person = require('../examples/Person'),
 
 module.exports = Person.extend('Developer',
     {
-        languages: {}
+        languages: {},
+        mainLanguage: { name: 'C', hours: 10 }
     },
     {
         initialize: function initialize(name, age, languages) {
@@ -27,10 +28,8 @@ module.exports = Person.extend('Developer',
     },
     {
         iVars: {
-            mainLanguage: {
-                value: { name: 'C', hours: 10 },
-                writable: false
-            }
+            languages: { writable: false },
+            mainLanguage: { writable: false }
         }
     }
 );

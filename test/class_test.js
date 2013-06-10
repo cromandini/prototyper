@@ -87,15 +87,35 @@ describe('class objects', function () {
     });
 
     describe('#iVars', function () {
-        it('should be an empty object by default', function () {
+        it('should be an object', function () {
+            expect(Prototyper.extend('Foo').iVars).to.be.an('object');
+        });
+        it('should be empty by default', function () {
             expect(Prototyper.extend('Foo').iVars).to.eql({});
         });
-        it('should hold the instance properties', function () {
+        it('should contain the instance properties', function () {
             expect(Person.iVars.happiness).to.equal(10);
             expect(Person.iVars.happinessThreshold).to.equal(100);
+            expect(Developer.iVars.languages).to.eql({});
+            expect(Developer.iVars.mainLanguage).to.eql({ name: 'C', hours: 10 });
         });
-        it('should fail if............', function () {
-//            Person.iVars.happiness = 2;
+        it('should be enumerable', function () {
+            expect(Object.getOwnPropertyDescriptor(Person, 'iVars').enumerable).to.be.true;
+            expect(Object.getOwnPropertyDescriptor(Developer, 'iVars').enumerable).to.be.true;
+        });
+        it('should be owned by the object', function () {
+            expect(Person.hasOwnProperty('iVars')).to.be.true;
+            expect(Developer.hasOwnProperty('iVars')).to.be.true;
+        });
+    });
+
+    describe('#toString()', function () {
+        it('should return a string representing the value of the object', function () {
+            expect(Person.toString()).to.equal('[class Person]');
+            expect(Developer.toString()).to.equal('[class Developer]');
+        });
+        it('should be inherited', function () {
+            expect(Person.hasOwnProperty('toString')).to.be.false;
         });
     });
 });
