@@ -118,4 +118,42 @@ describe('class objects', function () {
             expect(Person.hasOwnProperty('toString')).to.be.false;
         });
     });
+
+    describe('#extend(name, iVars, cVars, descriptors)', function () {
+        it('should create a Class object that inherits from the Class', function () {
+            expect(Person.isClass).to.be.true;
+            expect(Developer.isClass).to.be.true;
+
+            expect(Person.super).to.eql(Prototyper);
+            expect(Developer.super).to.eql(Person);
+
+            expect(Prototyper.isPrototypeOf(Person)).to.be.true;
+            expect(Prototyper.isPrototypeOf(Developer)).to.be.true;
+            expect(Person.isPrototypeOf(Developer)).to.be.true;
+        });
+    });
+
+    describe('#create()', function () {
+        it('should create an instance object that inherits from the object.', function () {
+            var mechi = Person.create('Mechi');
+            expect(mechi.super).to.equal(Person);
+            expect(Person.isPrototypeOf(mechi)).to.be.true;
+
+            var clau = Developer.create('Claudio');
+            expect(clau.super).to.equal(Developer);
+            expect(Developer.isPrototypeOf(clau)).to.be.true;
+            expect(Person.isPrototypeOf(clau)).to.be.true;
+            expect(Prototyper.isPrototypeOf(clau)).to.be.true;
+        });
+        it('should be inherited', function () {
+            expect(Person.hasOwnProperty('create')).to.be.false;
+            expect(Developer.hasOwnProperty('create')).to.be.false;
+        });
+        describe('#iVars', function () {
+
+        });
+        describe('#initialize()', function () {
+
+        });
+    });
 });

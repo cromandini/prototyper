@@ -116,18 +116,38 @@ var Prototyper = module.exports = {
      * @throws {TypeError} if invoked in Prototyper object or in instance objects
      */
     create: function create() {
-        var object;
+        var theClass = this,
+            object;
 
         if (this === Prototyper || this.isInstance) {
             throw new TypeError('Object ' + Prototyper.toString() + ' cannot create instances');
         }
 
         object = Object.create(this, {
-            objectName: { value: 'prototyper-1' }, // serialize name
+            /**
+             * TODO serialize
+             * The name of the object.
+             * @type {String}
+             */
+            objectName: { value: 'prototyper-1' },
+
+            /**
+             * Whether the object is a class.
+             * @type {Boolean}
+             */
             isClass: { value: false },
-            prototyper: { value: this }
+
+            /**
+             * The prototype of the object.
+             * @type {Object}
+             */
+            super: { value: this }
         });
-        if (this.instanceProperties) utils.mixProperties(object, this.instanceProperties);
+
+        while (theClass !== Prototyper) {
+            utils.mixProperties(object, theClass.iVars, { override: true, define: true });
+            theClass = theClass.super;
+        }
         if (object.initialize) object.initialize.apply(object, arguments);
 
         return object;
