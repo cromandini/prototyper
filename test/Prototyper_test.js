@@ -45,7 +45,7 @@ describe('Prototyper', function () {
     });
 
     describe('#objectType', function () {
-        var expected = 'Class';
+        var expected = 'class';
         it('should be "' + expected + '"', function () {
             expect(Prototyper.objectType).to.equal(expected);
         });
@@ -64,7 +64,7 @@ describe('Prototyper', function () {
     });
 
     describe('#toString()', function () {
-        var expected = '[Class Prototyper]';
+        var expected = '[class Prototyper]';
         it('should return ' + expected, function () {
             expect(Prototyper.toString()).to.equal(expected);
         });
@@ -167,7 +167,7 @@ describe('Prototyper', function () {
 
     describe('#create()', function () {
         it('should fail', function () {
-            expect(create).to.throw(/Object \[Class Prototyper\] cannot create instances/);
+            expect(create).to.throw(/Object \[class Prototyper\] cannot create instances/);
             expect(create).to.throw(TypeError);
 
             function create() {
@@ -182,7 +182,7 @@ describe('Prototyper', function () {
     describe('#defineIVar(property, descriptor)', function () {
         it('should fail', function () {
             expect(defineIVar).to.throw(TypeError);
-            expect(defineIVar).to.throw(/Object \[Class Prototyper\] does not make use of iVars/);
+            expect(defineIVar).to.throw(/Object \[class Prototyper\] does not make use of iVars/);
 
             function defineIVar() {
                 Prototyper.defineIVar('foo', { value: 2 });
@@ -196,7 +196,7 @@ describe('Prototyper', function () {
     describe('#defineIVars(descriptors)', function () {
         it('should fail', function () {
             expect(defineIVars).to.throw(TypeError);
-            expect(defineIVars).to.throw(/Object \[Class Prototyper\] does not make use of iVars/);
+            expect(defineIVars).to.throw(/Object \[class Prototyper\] does not make use of iVars/);
 
             function defineIVars() {
                 Prototyper.defineIVars({
@@ -246,7 +246,7 @@ describe('Prototyper', function () {
     describe('#mixin(source, options)', function () {
         it('should fail', function () {
             expect(mixin).to.throw(TypeError);
-            expect(mixin).to.throw(/Object \[Class Prototyper\] cannot be mixed/);
+            expect(mixin).to.throw(/Object \[class Prototyper\] cannot be mixed/);
 
             function mixin() {
                 Prototyper.mixin();
@@ -260,7 +260,7 @@ describe('Prototyper', function () {
     describe('#clone()', function () {
         it('should fail', function () {
             expect(clone).to.throw(TypeError);
-            expect(clone).to.throw(/Object \[Class Prototyper\] cannot be cloned, try extend/);
+            expect(clone).to.throw(/Object \[class Prototyper\] cannot be cloned, try extend/);
 
             function clone() {
                 Prototyper.clone();

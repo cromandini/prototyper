@@ -34,12 +34,12 @@ var Prototyper = module.exports = {
      * @return {String}
      */
     get objectType() {
-        return this.isClass ? 'Class' : 'instance';
+        return this.isClass ? 'class' : 'instance';
     },
 
     /**
      * The prototype of this object.
-     * @usage Prototyper YES / Class YES / instance YES
+     * @usage Prototyper YES / class YES / instance YES
      * @type {Object}
      */
     super: Object.prototype,
@@ -47,8 +47,8 @@ var Prototyper = module.exports = {
     /**
      * Returns a string representing the value of this object.
      * The string is based on object type and name.
-     * Examples: [Class Prototyper] [Class Person] [instance person-1]
-     * @usage Prototyper YES / Class YES / instance YES
+     * Examples: [class Prototyper] [class Person] [instance person-1]
+     * @usage Prototyper YES / class YES / instance YES
      * @return {String}
      */
     toString: function toString() {
@@ -57,7 +57,7 @@ var Prototyper = module.exports = {
 
     /**
      * Creates a class object that inherits from this class.
-     * @usage Prototyper YES / Class YES / instance NO
+     * @usage Prototyper YES / class YES / instance NO
      * @param {String} name
      * @param {Object} [iVars] The instance members
      * @param {Object} [cVars] The class members
@@ -92,7 +92,7 @@ var Prototyper = module.exports = {
             super: { value: this },
 
             /**
-             * The instance properties.
+             * Holds the instance properties.
              * @type {Object}
              */
             iVars: {
@@ -115,7 +115,7 @@ var Prototyper = module.exports = {
 
     /**
      * Creates an instance object that inherits from this object.
-     * @usage Prototyper NO / Class YES / instance NO
+     * @usage Prototyper NO / class YES / instance NO
      * @throws {TypeError} if invoked in Prototyper object
      * @return {Object}
      * @throws {TypeError} if invoked in Prototyper object or in instance objects
@@ -140,7 +140,7 @@ var Prototyper = module.exports = {
 
     /**
      * Defines an iVar, delegates to Object#defineProperty().
-     * @usage Prototyper NO / Class YES / instance NO
+     * @usage Prototyper NO / class YES / instance NO
      * @param {String} property
      * @param {Object} descriptor Property descriptor
      * @return {Object}
@@ -156,7 +156,7 @@ var Prototyper = module.exports = {
 
     /**
      * Defines iVars, delegates to Object#defineProperty().
-     * @usage Prototyper NO / Class YES / instance NO
+     * @usage Prototyper NO / class YES / instance NO
      * @param {Object} descriptors Property descriptor set
      * @return {Object}
      * @throws {TypeError} if invoked in Prototyper or instance objects
@@ -171,7 +171,7 @@ var Prototyper = module.exports = {
 
     /**
      * Defines a property in the object, delegates to Object#defineProperty().
-     * @usage Prototyper NO / Class YES / instance YES
+     * @usage Prototyper NO / class YES / instance YES
      * @param {String} property
      * @param {Object} descriptor Property descriptor
      * @return {Object}
@@ -182,7 +182,7 @@ var Prototyper = module.exports = {
 
     /**
      * Defines properties in the object, delegates to Object#defineProperties().
-     * @usage Prototyper NO / Class YES / instance YES
+     * @usage Prototyper NO / class YES / instance YES
      * @param {Object} descriptors Property descriptor set
      * @return {Object}
      */
@@ -192,7 +192,7 @@ var Prototyper = module.exports = {
 
     /**
      * Copies the properties of source to this object, with given options.
-     * @usage Prototyper NO / Class YES / instance YES
+     * @usage Prototyper NO / class YES / instance YES
      * @param {Object} source
      * @param {Object} [options]
      * @param {Boolean} [options.all] true to copy all the properties, default is copying only the enumerables
@@ -211,7 +211,7 @@ var Prototyper = module.exports = {
 
     /**
      * Creates a clone of this object.
-     * @usage Prototyper NO / Class NO / instance YES
+     * @usage Prototyper NO / class NO / instance YES
      * @return {Object}
      * @throws {TypeError} if invoked in abstract objects
      */
@@ -222,7 +222,7 @@ var Prototyper = module.exports = {
 
     /**
      * Returns an object with static methods as defined in utils module.
-     * @usage Prototyper YES / Class NO / instance NO
+     * @usage Prototyper YES / class NO / instance NO
      * @getter
      * @returns {Object}
      */
