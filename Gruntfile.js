@@ -42,9 +42,15 @@ module.exports = function (grunt) {
                     reporter: 'spec'
                 }
             },
-            abstract: {
+            class: {
                 options: {
-                    files: [ './test/abstract_test.js' ],
+                    files: [ './test/class_test.js' ],
+                    reporter: 'spec'
+                }
+            },
+            instance: {
+                options: {
+                    files: [ './test/instance_test.js' ],
                     reporter: 'spec'
                 }
             }
@@ -60,5 +66,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('test:utils', [ 'mochacli:utils' ]);
     grunt.registerTask('test:prototyper', [ 'mochacli:prototyper' ]);
-    grunt.registerTask('test:abstract', [ 'mochacli:abstract' ]);
+    grunt.registerTask('test:class', [ 'mochacli:class' ]);
+    grunt.registerTask('test:instance', [ 'mochacli:instance' ]);
 };
