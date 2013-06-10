@@ -1,0 +1,17 @@
+{
+    "strict": true,
+    "curly": false,
+    "eqeqeq": true,
+    "immed": true,
+    "onevar": true,
+    "latedef": false,
+    "newcap": true,
+    "noarg": true,
+    "sub": true,
+    "undef": true,
+    "unused": true,
+    "boss": true,
+    "eqnull": true,
+    "node": true,
+    "expr": true
+}
