@@ -1,10 +1,10 @@
-/* global describe, it */
+/* global describe, it, beforeEach, afterEach */
 /* jshint onevar:false */
 
 'use strict';
 
 var Prototyper = require('../lib/Prototyper'),
-//    sinon = require('sinon'),
+    sinon = require('sinon'),
     chai = require('chai'),
     sinonChai = require("sinon-chai"),
     expect = chai.expect;
@@ -108,6 +108,29 @@ describe('class objects', function () {
         });
     });
 
+    describe('#iSerial', function () {
+        it('should be an accessor with only a getter', function () {
+            var descriptor = Object.getOwnPropertyDescriptor(Developer, 'iSerial');
+            expect(descriptor.get).to.be.a('function');
+            expect(descriptor.set).to.be.undefined;
+            expect(setISerial).to.throw(TypeError);
+            expect(setISerial).to.throw(/Cannot set property iSerial .* which has only a getter/);
+
+            function setISerial() {
+                Developer.iSerial = 11;
+            }
+        });
+        it('should be enumerable', function () {
+            expect(Object.getOwnPropertyDescriptor(Developer, 'iSerial').enumerable).to.be.true;
+        });
+        it('should get incremental serial numbers starting from 1', function () {
+            expect(Developer.iSerial).to.equal(1);
+            expect(Developer.iSerial).to.equal(2);
+            expect(Developer.iSerial).to.equal(3);
+            expect(Developer.iSerial).to.equal(4);
+        });
+    });
+
     describe('#toString()', function () {
         it('should return a string representing the value of the object', function () {
             expect(Person.toString()).to.equal('[class Person]');
@@ -139,6 +162,7 @@ describe('class objects', function () {
     describe('#create()', function () {
         it('should create an instance object that inherits from the object.', function () {
             var mechi = Person.create('Mechi');
+            expect(mechi.isInstance).to.be.true;
             expect(mechi.super).to.equal(Person);
             expect(Person.isPrototypeOf(mechi)).to.be.true;
 
@@ -152,11 +176,31 @@ describe('class objects', function () {
             expect(Person.hasOwnProperty('create')).to.be.false;
             expect(Developer.hasOwnProperty('create')).to.be.false;
         });
-        describe('#objectName of the instance', function () {
-
+        describe('instance#objectName', function () {
+            it('should be a string formed by Class#objectName in lowercase and Class#iSerial', function () {
+                expect(Developer.create('Foo').objectName).to.equal('developer-6');
+                expect(Developer.create('Foo').objectName).to.equal('developer-7');
+                expect(JavascriptDeveloper.create('Foo').objectName).to.equal('javascriptdeveloper-1');
+                expect(JavascriptDeveloper.create('Foo').objectName).to.equal('javascriptdeveloper-2');
+                expect(JavascriptDeveloper.create('Foo').objectName).to.equal('javascriptdeveloper-3');
+            });
         });
-        describe('#initialize() of the instance', function () {
-
+        describe('instance#initialize()', function () {
+            beforeEach(function () {
+                this.initializeSpy = sinon.spy(Person, 'initialize');
+            });
+            afterEach(function () {
+                this.initializeSpy.restore();
+            });
+            it('should be called, if defined, in the creation process', function () {
+                expect(this.initializeSpy).to.not.have.been.called;
+                Person.create('Mechi');
+                expect(this.initializeSpy).to.have.been.calledOnce;
+            });
+            it('should be called with #create() arguments', function () {
+                Person.create('Mechi', 2, Prototyper);
+                expect(this.initializeSpy).to.have.been.calledWith('Mechi', 2, Prototyper);
+            });
         });
     });
 });
