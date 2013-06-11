@@ -1,40 +1,40 @@
 {
-  "name": "prototyper",
-  "description": "Base object for using prototypal inheritance in javascript",
-  "version": "0.1.0",
-  "homepage": "http://cromandini.github.io/prototyper",
-  "author": {
-    "name": "Claudio Romandini",
-    "email": "cromandini@me.com",
-    "url": "http://cromandini.me"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/cromandini/prototyper.git"
-  },
-  "bugs": {
-    "url": "https://github.com/cromandini/prototyper/issues"
-  },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://cromandini.github.io/prototyper/blob/master/LICENSE-MIT"
+    "name": "prototyper",
+    "description": "Base object for using prototypal inheritance in javascript",
+    "version": "0.1.0",
+    "homepage": "http://cromandini.github.io/prototyper",
+    "author": {
+        "name": "Claudio Romandini",
+        "email": "cromandini@me.com",
+        "url": "http://cromandini.me"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/cromandini/prototyper.git"
+    },
+    "bugs": {
+        "url": "https://github.com/cromandini/prototyper/issues"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "http://cromandini.github.io/prototyper/blob/master/LICENSE-MIT"
+        }
+    ],
+    "main": "./index",
+    "scripts": {
+        "test": "./bin/grunt test"
+    },
+    "engines": {
+        "node": ">= 0.10.5",
+        "npm": ">= 1.2.21"
+    },
+    "devDependencies": {
+        "grunt": "~0.4.1",
+        "grunt-contrib-jshint": "~0.5.4",
+        "grunt-mocha-cli": "~1.0.6",
+        "chai": "~1.6.0",
+        "sinon": "~1.7.2",
+        "sinon-chai": "~2.4.0"
     }
-  ],
-  "main": "./Prototyper",
-  "scripts": {
-    "test": "./bin/grunt test"
-  },
-  "engines": {
-    "node": ">= 0.10.5",
-    "npm": ">= 1.2.21"
-  },
-  "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "~0.5.4",
-    "grunt-mocha-cli": "~1.0.6",
-    "chai": "~1.6.0",
-    "sinon": "~1.7.2",
-    "sinon-chai": "~2.4.0"
-  }
 }

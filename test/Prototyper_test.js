@@ -3,9 +3,8 @@
 
 'use strict';
 
-var Prototyper = require('../Prototyper'),
-    expect = require('chai').expect,
-    utils = require('../lib/utils');
+var Prototyper = require('../lib/Prototyper'),
+    expect = require('chai').expect;
 
 describe('Prototyper', function () {
 
@@ -268,18 +267,6 @@ describe('Prototyper', function () {
         });
         it('should be enumerable', function () {
             expect(Object.getOwnPropertyDescriptor(Prototyper, 'clone').enumerable).to.be.true;
-        });
-    });
-
-    describe('#utils', function () {
-        it('should have static methods defined in utils module', function () {
-            expect(Prototyper.utils).to.equal(utils);
-            expect(Prototyper.utils.isObject).to.eql(utils.isObject);
-            expect(Prototyper.utils.mixProperties).to.eql(utils.mixProperties);
-            expect(Prototyper.utils.defineAllProperties).to.eql(utils.defineAllProperties);
-        });
-        it('should be non-enumerable', function () {
-            expect(Object.getOwnPropertyDescriptor(Prototyper, 'utils').enumerable).to.be.false;
         });
     });
 });
