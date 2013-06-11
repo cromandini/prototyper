@@ -130,6 +130,10 @@ describe('class objects', function () {
             expect(Prototyper.isPrototypeOf(Developer)).to.be.true;
             expect(Person.isPrototypeOf(Developer)).to.be.true;
         });
+        it('should be inherited', function () {
+            expect(Person.hasOwnProperty('extend')).to.be.false;
+            expect(Developer.hasOwnProperty('extend')).to.be.false;
+        });
     });
 
     describe('#create()', function () {
@@ -148,10 +152,10 @@ describe('class objects', function () {
             expect(Person.hasOwnProperty('create')).to.be.false;
             expect(Developer.hasOwnProperty('create')).to.be.false;
         });
-        describe('#iVars', function () {
+        describe('#objectName of the instance', function () {
 
         });
-        describe('#initialize()', function () {
+        describe('#initialize() of the instance', function () {
 
         });
     });
