@@ -1,20 +1,21 @@
 'use strict';
 
 var Person = require('../examples/Person'),
-    utils = require('../Prototyper').utils;
+    utils = require('../lib/utils');
 
 module.exports = Person.extend('Developer',
+    // iVars
     {
         languages: [],
-        mainLanguage: {
-            name: 'C',
-            hours: 10
-        }
+        mainLanguage: { name: 'C', hours: 10 }
     },
+    // cVars
     {
         initialize: function initialize(name, languages) {
             var me = this;
-            this.super.super.initialize.call(this, name); // TODO review super.super
+
+            Person.initialize.call(this, name);
+
             this.languages.push(this.mainLanguage);
             if (Array.isArray(languages)) {
                 languages.forEach(function (language) {
@@ -24,12 +25,16 @@ module.exports = Person.extend('Developer',
         },
 
         code: function code(language, hours) {
-            if (!utils.isObject(language)) throw new TypeError('language must be an object: ' + language);
+            if (!utils.isObject(language)) {
+                throw new TypeError('language must be an object: ' + language);
+            }
             hours = hours || 3;
             this.languages[ language.name ].hours += hours;
+
             return this.name + ' coded ' + this.languages[ language.name ] + ' for ' + hours + ' hours';
         }
     },
+    // descriptors
     {
         iVars: {
             languages: { writable: false },

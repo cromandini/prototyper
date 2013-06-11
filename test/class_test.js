@@ -1,11 +1,10 @@
-/* global describe, it, beforeEach */
+/* global describe, it */
 /* jshint onevar:false */
 
 'use strict';
 
-var Prototyper = require('../Prototyper'),
-    utils = require('../lib/utils'),
-    sinon = require('sinon'),
+var Prototyper = require('../lib/Prototyper'),
+//    sinon = require('sinon'),
     chai = require('chai'),
     sinonChai = require("sinon-chai"),
     expect = chai.expect;

@@ -1,10 +1,8 @@
 'use strict';
 
-var Prototyper = require('../Prototyper');
+var Prototyper = require('../lib/Prototyper');
 
-module.exports = Prototyper.extend(
-    // name
-    'Person',
+module.exports = Prototyper.extend('Person',
     // iVars
     {
         name: 'Unnamed',
@@ -30,9 +28,7 @@ module.exports = Prototyper.extend(
     // descriptors
     {
         iVars: {
-            happinessThreshold: {
-                writable: false
-            }
+            happinessThreshold: { writable: false }
         },
         cVars: {
             beHappier: {
