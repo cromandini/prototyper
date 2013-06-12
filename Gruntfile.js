@@ -20,13 +20,13 @@ module.exports = function (grunt) {
         mochacli: {
             all_dot: {
                 options: {
-                    files: [ './test/**/*.js', '!./test/Prototyper_old_test.js' ],
+                    files: [ './test/**/*.js' ],
                     reporter: 'dot'
                 }
             },
             all_spec: {
                 options: {
-                    files: [ './test/**/*.js', '!./test/Prototyper_old_test.js' ],
+                    files: [ './test/**/*.js' ],
                     reporter: 'spec'
                 }
             },
