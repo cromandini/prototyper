@@ -4,6 +4,7 @@
 'use strict';
 
 var Prototyper = require('../lib/Prototyper'),
+    utils = require('../lib/utils'),
     sinon = require('sinon'),
     chai = require('chai'),
     sinonChai = require("sinon-chai"),
@@ -15,7 +16,7 @@ var Person = require('../examples/Person'),
     Developer = require('../examples/Developer'),
     JavascriptDeveloper = require('../examples/JavascriptDeveloper');
 
-describe('class objects', function () {
+describe('Class', function () {
 
     describe('#objectName', function () {
         it('should be the name of the object', function () {
@@ -172,6 +173,13 @@ describe('class objects', function () {
             expect(Person.isPrototypeOf(clau)).to.be.true;
             expect(Prototyper.isPrototypeOf(clau)).to.be.true;
         });
+        it('should copy #iVars of Class and of all the classes in the prototype chain', function () {
+            var foo = JavascriptDeveloper.create('Foo');
+
+            expect(foo).to.contain.keys(Object.keys(Person.iVars));
+            expect(foo).to.contain.keys(Object.keys(Developer.iVars));
+            expect(foo).to.contain.keys(Object.keys(JavascriptDeveloper.iVars));
+        });
         it('should be inherited', function () {
             expect(Person.hasOwnProperty('create')).to.be.false;
             expect(Developer.hasOwnProperty('create')).to.be.false;
@@ -180,9 +188,9 @@ describe('class objects', function () {
             it('should be a string formed by Class#objectName in lowercase and Class#iSerial', function () {
                 expect(Developer.create('Foo').objectName).to.equal('developer-6');
                 expect(Developer.create('Foo').objectName).to.equal('developer-7');
-                expect(JavascriptDeveloper.create('Foo').objectName).to.equal('javascriptdeveloper-1');
                 expect(JavascriptDeveloper.create('Foo').objectName).to.equal('javascriptdeveloper-2');
                 expect(JavascriptDeveloper.create('Foo').objectName).to.equal('javascriptdeveloper-3');
+                expect(JavascriptDeveloper.create('Foo').objectName).to.equal('javascriptdeveloper-4');
             });
         });
         describe('instance#initialize()', function () {
@@ -201,6 +209,131 @@ describe('class objects', function () {
                 Person.create('Mechi', 2, Prototyper);
                 expect(this.initializeSpy).to.have.been.calledWith('Mechi', 2, Prototyper);
             });
+        });
+    });
+
+    describe('#defineIVar(property, descriptor)', function () {
+        it('should define one iVar in Class', function () {
+            var descriptor = {
+                value: 1,
+                enumerable: false,
+                writable: false,
+                configurable: true
+            };
+            Person.defineIVar('foo', descriptor);
+            expect(Object.getOwnPropertyDescriptor(Person.iVars, 'foo')).to.eql(descriptor);
+        });
+        it('should be inherited', function () {
+            expect(Person.hasOwnProperty('defineIVar')).to.be.false;
+            expect(Developer.hasOwnProperty('defineIVar')).to.be.false;
+        });
+    });
+
+    describe('#defineIVars(descriptors)', function () {
+        it('should define iVars in Class', function () {
+            var foo = { value: 'bar' },
+                bar = { value: 'baz' };
+
+            Person.defineIVars({ foo: foo, bar: bar });
+            expect(Object.getOwnPropertyDescriptor(Person.iVars, 'foo')).to.eql({
+                value: foo.value,
+                writable: false,
+                enumerable: false,
+                configurable: true
+            });
+            expect(Object.getOwnPropertyDescriptor(Person.iVars, 'bar')).to.eql({
+                value: bar.value,
+                writable: false,
+                enumerable: false,
+                configurable: false
+            });
+        });
+        it('should be inherited', function () {
+            expect(Person.hasOwnProperty('defineIVars')).to.be.false;
+            expect(Developer.hasOwnProperty('defineIVars')).to.be.false;
+        });
+    });
+
+    describe('#defineProperty(property, descriptor)', function () {
+        it('should define a property in the object', function () {
+            var descriptor = {
+                value: 1,
+                enumerable: false,
+                writable: false,
+                configurable: true
+            };
+            Person.defineProperty('foo', descriptor);
+            expect(Object.getOwnPropertyDescriptor(Person, 'foo')).to.eql(descriptor);
+        });
+        it('should be inherited', function () {
+            expect(Person.hasOwnProperty('defineProperty')).to.be.false;
+            expect(Developer.hasOwnProperty('defineProperty')).to.be.false;
+        });
+    });
+
+    describe('#defineProperties(descriptors)', function () {
+        it('should define propertys in the object', function () {
+            var foo = { value: 'bar' },
+                bar = { value: 'baz' };
+
+            Person.defineProperties({ foo: foo, bar: bar });
+            expect(Object.getOwnPropertyDescriptor(Person, 'foo')).to.eql({
+                value: foo.value,
+                writable: false,
+                enumerable: false,
+                configurable: true
+            });
+            expect(Object.getOwnPropertyDescriptor(Person, 'bar')).to.eql({
+                value: bar.value,
+                writable: false,
+                enumerable: false,
+                configurable: false
+            });
+        });
+        it('should be inherited', function () {
+            expect(Person.hasOwnProperty('defineProperties')).to.be.false;
+            expect(Developer.hasOwnProperty('defineProperties')).to.be.false;
+        });
+    });
+
+    describe('#mixin(source, options)', function () {
+        it('should copy the properties of source to Class', function () {
+            var musician = {
+                play: function play() {
+                    return this.name + ' is playing...';
+                },
+                compose: function () {
+                    return this.name + ' is composing...';
+                }
+            };
+            Person.mixin(musician);
+            expect(Person.play).to.eql(musician.play);
+            expect(Person.compose).to.eql(musician.compose);
+        });
+        it('should fail if source is not an object', function () {
+            expect(mixin).to.throw(TypeError);
+            expect(mixin).to.throw(/source must be an object/);
+
+            function mixin() {
+                Person.mixin();
+            }
+        });
+        it('should delegate to utils#mixProperties()', function () {
+            var mixPropertiesSpy = sinon.spy(utils, 'mixProperties');
+            var writer = {
+                write: function write() {
+                    return this.name + ' is writing...';
+                }
+            };
+            var options = { all: true, override: true, define: true };
+            Person.mixin(writer, options);
+            expect(mixPropertiesSpy).to.have.been.calledOnce;
+            expect(mixPropertiesSpy).to.have.been.calledWith(Person, writer, options);
+            mixPropertiesSpy.restore();
+        });
+        it('should be inherited', function () {
+            expect(Person.hasOwnProperty('mixin')).to.be.false;
+            expect(Developer.hasOwnProperty('mixin')).to.be.false;
         });
     });
 });
