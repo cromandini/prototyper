@@ -336,4 +336,19 @@ describe('Class', function () {
             expect(Developer.hasOwnProperty('mixin')).to.be.false;
         });
     });
+
+    describe('#clone()', function () {
+        it('should fail', function () {
+            expect(clone).to.throw(TypeError);
+            expect(clone).to.throw(/Object \[class .*\] cannot be cloned, try extend/);
+
+            function clone() {
+                Person.clone();
+            }
+        });
+        it('should be inherited', function () {
+            expect(Person.hasOwnProperty('clone')).to.be.false;
+            expect(Developer.hasOwnProperty('clone')).to.be.false;
+        });
+    });
 });
