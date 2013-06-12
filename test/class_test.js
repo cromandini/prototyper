@@ -24,8 +24,14 @@ describe('Class', function () {
             expect(Developer.objectName).to.equal('Developer');
             expect(JavascriptDeveloper.objectName).to.equal('Javascript Developer');
         });
+        it('should be readonly', function () {
+            expect(Object.getOwnPropertyDescriptor(Person, 'objectName').writable).to.be.false;
+        });
         it('should be non-enumerable', function () {
             expect(Object.getOwnPropertyDescriptor(Person, 'objectName').enumerable).to.be.false;
+        });
+        it('should be non-configurable', function () {
+            expect(Object.getOwnPropertyDescriptor(Person, 'objectName').configurable).to.be.false;
         });
         it('should be owned by the object', function () {
             expect(Person.hasOwnProperty('objectName')).to.be.true;
@@ -38,9 +44,14 @@ describe('Class', function () {
             expect(Person.isClass).to.be.true;
             expect(Developer.isClass).to.be.true;
         });
+        it('should be readonly', function () {
+            expect(Object.getOwnPropertyDescriptor(Developer, 'isClass').writable).to.be.false;
+        });
         it('should be non-enumerable', function () {
             expect(Object.getOwnPropertyDescriptor(Person, 'isClass').enumerable).to.be.false;
-            expect(Object.getOwnPropertyDescriptor(Developer, 'isClass').enumerable).to.be.false;
+        });
+        it('should be non-configurable', function () {
+            expect(Object.getOwnPropertyDescriptor(Developer, 'isClass').configurable).to.be.false;
         });
         it('should be owned by the object', function () {
             expect(Person.hasOwnProperty('isClass')).to.be.true;
@@ -76,9 +87,14 @@ describe('Class', function () {
             expect(Person.super).to.equal(Prototyper);
             expect(Person.super).to.equal(Prototyper);
         });
+        it('should be readonly', function () {
+            expect(Object.getOwnPropertyDescriptor(Person, 'super').writable).to.be.false;
+        });
         it('should be non-enumerable', function () {
             expect(Object.getOwnPropertyDescriptor(Person, 'super').enumerable).to.be.false;
-            expect(Object.getOwnPropertyDescriptor(Developer, 'super').enumerable).to.be.false;
+        });
+        it('should be non-configurable', function () {
+            expect(Object.getOwnPropertyDescriptor(Developer, 'super').configurable).to.be.false;
         });
         it('should be owned by the object', function () {
             expect(Person.hasOwnProperty('super')).to.be.true;
@@ -99,9 +115,14 @@ describe('Class', function () {
             expect(Developer.iVars.languages).to.eql({});
             expect(Developer.iVars.mainLanguage).to.eql({ name: 'C', hours: 10 });
         });
+        it('should be readonly', function () {
+            expect(Object.getOwnPropertyDescriptor(Person, 'iVars').writable).to.be.false;
+        });
         it('should be enumerable', function () {
             expect(Object.getOwnPropertyDescriptor(Person, 'iVars').enumerable).to.be.true;
-            expect(Object.getOwnPropertyDescriptor(Developer, 'iVars').enumerable).to.be.true;
+        });
+        it('should be non-configurable', function () {
+            expect(Object.getOwnPropertyDescriptor(Developer, 'iVars').configurable).to.be.false;
         });
         it('should be owned by the object', function () {
             expect(Person.hasOwnProperty('iVars')).to.be.true;
@@ -110,25 +131,31 @@ describe('Class', function () {
     });
 
     describe('#iSerial', function () {
-        it('should be an accessor with only a getter', function () {
-            var descriptor = Object.getOwnPropertyDescriptor(Developer, 'iSerial');
-            expect(descriptor.get).to.be.a('function');
-            expect(descriptor.set).to.be.undefined;
-            expect(setISerial).to.throw(TypeError);
-            expect(setISerial).to.throw(/Cannot set property iSerial .* which has only a getter/);
-
-            function setISerial() {
-                Developer.iSerial = 11;
-            }
-        });
-        it('should be enumerable', function () {
-            expect(Object.getOwnPropertyDescriptor(Developer, 'iSerial').enumerable).to.be.true;
-        });
         it('should get incremental serial numbers starting from 1', function () {
             expect(Developer.iSerial).to.equal(1);
             expect(Developer.iSerial).to.equal(2);
             expect(Developer.iSerial).to.equal(3);
             expect(Developer.iSerial).to.equal(4);
+        });
+        it('should be an accessor with only a getter', function () {
+            var descriptor = Object.getOwnPropertyDescriptor(Developer, 'iSerial');
+            var setISerial = function () {
+                Developer.iSerial = 11;
+            };
+            expect(descriptor.get).to.be.a('function');
+            expect(descriptor.set).to.be.undefined;
+            expect(setISerial).to.throw(TypeError);
+            expect(setISerial).to.throw(/Cannot set property iSerial .* which has only a getter/);
+        });
+        it('should be enumerable', function () {
+            expect(Object.getOwnPropertyDescriptor(Developer, 'iSerial').enumerable).to.be.true;
+        });
+        it('should be non-configurable', function () {
+            expect(Object.getOwnPropertyDescriptor(Developer, 'iSerial').configurable).to.be.false;
+        });
+        it('should be owned by the object', function () {
+            expect(Person.hasOwnProperty('iVars')).to.be.true;
+            expect(Developer.hasOwnProperty('iVars')).to.be.true;
         });
     });
 
