@@ -1,7 +1,7 @@
 'use strict';
 
-var Developer = require('../examples/Developer'),
-    utils = require('../lib/utils');
+var Developer = require('./Developer'),
+    utils = require('../../lib/utils');
 
 module.exports = Developer.extend('Javascript Developer',
     // iVars
@@ -15,6 +15,7 @@ module.exports = Developer.extend('Javascript Developer',
     {
         initialize: function initialize(name, languages, expertise) {
             Developer.initialize.call(this, name, languages);
+
             if (utils.isObject(expertise)) {
                 this.node = !!expertise.node;
                 this.es5 = !!expertise.es5;

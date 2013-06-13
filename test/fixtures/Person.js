@@ -1,6 +1,6 @@
 'use strict';
 
-var Prototyper = require('../lib/Prototyper');
+var Prototyper = require('../../lib/Prototyper');
 
 module.exports = Prototyper.extend('Person',
     // iVars

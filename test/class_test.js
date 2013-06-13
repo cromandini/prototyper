@@ -12,9 +12,9 @@ var Prototyper = require('../lib/Prototyper'),
 
 chai.use(sinonChai);
 
-var Person = require('../examples/Person'),
-    Developer = require('../examples/Developer'),
-    JavascriptDeveloper = require('../examples/JavascriptDeveloper');
+var Person = require('../test/fixtures/Person'),
+    Developer = require('../test/fixtures/Developer'),
+    JavascriptDeveloper = require('../test/fixtures/JavascriptDeveloper');
 
 describe('Class', function () {
 

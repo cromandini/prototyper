@@ -1,7 +1,6 @@
 'use strict';
 
-var Person = require('../examples/Person'),
-    utils = require('../lib/utils');
+var Person = require('./Person');
 
 module.exports = Person.extend('Developer',
     // iVars
@@ -22,16 +21,6 @@ module.exports = Person.extend('Developer',
                     me.languages.push(language);
                 });
             }
-        },
-
-        code: function code(language, hours) {
-            if (!utils.isObject(language)) {
-                throw new TypeError('language must be an object: ' + language);
-            }
-            hours = hours || 3;
-            this.languages[ language.name ].hours += hours;
-
-            return this.name + ' coded ' + this.languages[ language.name ] + ' for ' + hours + ' hours';
         }
     },
     // descriptors

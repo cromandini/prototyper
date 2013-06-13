@@ -3,7 +3,7 @@
 
 'use strict';
 
-var Person = require('../examples/Person'),
+var Person = require('../test/fixtures/Person'),
     expect = require('chai').expect;
 
 describe('instance', function () {
