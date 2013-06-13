@@ -123,4 +123,64 @@ describe('instance', function () {
             expect(this.mechi.hasOwnProperty('toString')).to.be.false;
         });
     });
+
+    describe('#extend(name, iVars, cVars, descriptors)', function () {
+        it('should fail', function () {
+            var mechi = this.mechi;
+            expect(extend).to.throw(TypeError);
+            expect(extend).to.throw(/Object \[instance .*\] cannot be extended, try clone/);
+
+            function extend() {
+                mechi.extend();
+            }
+        });
+        it('should not be owned by the instance', function () {
+            expect(this.mechi.hasOwnProperty('extend')).to.be.false;
+        });
+    });
+
+    describe('#create()', function () {
+        it('should fail', function () {
+            var mechi = this.mechi;
+            expect(create).to.throw(TypeError);
+            expect(create).to.throw(/Object \[instance .*\] cannot create instances, try clone/);
+
+            function create() {
+                mechi.create();
+            }
+        });
+        it('should not be owned by the instance', function () {
+            expect(this.mechi.hasOwnProperty('create')).to.be.false;
+        });
+    });
+
+    describe('#defineIVar(property, descriptor)', function () {
+        it('should fail', function () {
+            var mechi = this.mechi;
+            expect(defineIVar).to.throw(TypeError);
+            expect(defineIVar).to.throw(/Object \[instance .*\] does not make use of iVars/);
+
+            function defineIVar() {
+                mechi.defineIVar();
+            }
+        });
+        it('should not be owned by the instance', function () {
+            expect(this.mechi.hasOwnProperty('defineIVar')).to.be.false;
+        });
+    });
+
+    describe('#defineIVars(descriptors)', function () {
+        it('should fail', function () {
+            var mechi = this.mechi;
+            expect(defineIVars).to.throw(TypeError);
+            expect(defineIVars).to.throw(/Object \[instance .*\] does not make use of iVars/);
+
+            function defineIVars() {
+                mechi.defineIVars();
+            }
+        });
+        it('should not be owned by the instance', function () {
+            expect(this.mechi.hasOwnProperty('defineIVars')).to.be.false;
+        });
+    });
 });
