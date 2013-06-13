@@ -1,25 +1,75 @@
 prototyper
 ==========
 
-Base object for using prototypal inheritance in javascript
+Base object for using prototypal inheritance in javascript. Is has a strong dependence on ES5.
 
 ## Getting Started
 
 Install the module with: `npm install prototyper`
 
-	var prototyper = require('prototyper');
+	'use strict';
+	
+	var Prototyper = require('../lib/Prototyper');
+	
+	var Person = Prototyper.extend('Person',
+		// iVars
+		{
+        	name: 'Unnamed',
+        	happiness: 10,
+        	happinessThreshold: 100
+    	},
+    	
+    	// cVars
+    	{
+    	    initialize: function initialize(name) {
+    	        if (!name) throw new Error('name is required');
+    	        this.name = name;
+    	    },
+    	    sayName: function sayName() {
+    	        return 'My name is ' + this.name;
+    	    },
+    	    get isHappy() {
+    	        return this.happiness >= this.happinessThreshold;
+    	    }
+    	},
+    	// descriptors
+    	{
+    	    iVars: {
+    	        happinessThreshold: {
+    	            writable: false
+    	        }
+    	    },
+    	    cVars: {
+    	        sayName: {
+    	            writable: false,
+    	            configurable: false
+    	        }
+    	    }
+    	}
+	);
 
-## Documentation
-_(Coming soon)_
+	var mechi = Person.create('Mechi');
 
-## Examples
-_(Coming soon)_
+	mechi.sayName() // -> 'My name is Mechi'
+	mechi.name // -> 'Mechi'
+	mechi.isHappy // -> false
+	mechi.happiness = 200;
+	mechi.isHappy // -> true
+	mechi.happinessThreshold = 0; // -> TypeError: Cannot assign to read only property
+	                                    'happinessThreshold' of [instance person-1]
+	
+	mechi.super.objectName // -> 'Person'
+	mechi.super.toString() // -> '[class Person]'
+	mechi.super.super.objectName // -> 'Prototyper'
+	mechi.super.super.toString() // -> '[class Prototyper]'
 
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt](http://gruntjs.com/).
+## To-do list
+- Documentation
+- More examples
+- Browser version
 
-## Release History
-_(Nothing yet)_
+## Run and view all the tests
+Run: `npm test`
 
 ## License
 Copyright (c) 2013 Claudio Romandini  
