@@ -183,4 +183,44 @@ describe('instance', function () {
             expect(this.mechi.hasOwnProperty('defineIVars')).to.be.false;
         });
     });
+
+    describe('#defineProperty(property, descriptor)', function () {
+        it('should define a property in the object', function () {
+            var descriptor = {
+                value: 1,
+                enumerable: false,
+                writable: false,
+                configurable: true
+            };
+            this.mechi.defineProperty('foo', descriptor);
+            expect(Object.getOwnPropertyDescriptor(this.mechi, 'foo')).to.eql(descriptor);
+        });
+        it('should be inherited', function () {
+            expect(this.mechi.hasOwnProperty('defineProperty')).to.be.false;
+        });
+    });
+
+    describe('#defineProperties(descriptors)', function () {
+        it('should define propertys in the object', function () {
+            var foo = { value: 'bar', configurable: true },
+                bar = { value: 'baz' };
+
+            this.mechi.defineProperties({ foo: foo, bar: bar });
+            expect(Object.getOwnPropertyDescriptor(this.mechi, 'foo')).to.eql({
+                value: foo.value,
+                writable: false,
+                enumerable: false,
+                configurable: true
+            });
+            expect(Object.getOwnPropertyDescriptor(this.mechi, 'bar')).to.eql({
+                value: bar.value,
+                writable: false,
+                enumerable: false,
+                configurable: false
+            });
+        });
+        it('should be inherited', function () {
+            expect(this.mechi.hasOwnProperty('defineProperties')).to.be.false;
+        });
+    });
 });
