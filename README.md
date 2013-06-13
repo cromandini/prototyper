@@ -18,7 +18,6 @@ Install the module with: `npm install prototyper`
         	happiness: 10,
         	happinessThreshold: 100
     	},
-    	
     	// cVars
     	{
     	    initialize: function initialize(name) {
@@ -68,8 +67,8 @@ Install the module with: `npm install prototyper`
 - More examples
 - Browser version
 
-## Run and view all the tests
-Run: `npm test`
+## Test
+Run the command: `npm test`
 
 ## License
 Copyright (c) 2013 Claudio Romandini  
