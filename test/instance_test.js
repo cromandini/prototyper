@@ -128,7 +128,7 @@ describe('instance', function () {
         it('should fail', function () {
             var mechi = this.mechi;
             expect(extend).to.throw(TypeError);
-            expect(extend).to.throw(/Object \[instance .*\] cannot be extended, try clone/);
+            expect(extend).to.throw(/Object \[instance .*\] cannot be extended/);
 
             function extend() {
                 mechi.extend();
@@ -143,7 +143,7 @@ describe('instance', function () {
         it('should fail', function () {
             var mechi = this.mechi;
             expect(create).to.throw(TypeError);
-            expect(create).to.throw(/Object \[instance .*\] cannot create instances, try clone/);
+            expect(create).to.throw(/Object \[instance .*\] cannot create instances/);
 
             function create() {
                 mechi.create();
@@ -221,6 +221,25 @@ describe('instance', function () {
         });
         it('should be inherited', function () {
             expect(this.mechi.hasOwnProperty('defineProperties')).to.be.false;
+        });
+    });
+
+    describe('#mixin(source, options)', function () {
+        it('should copy the properties of source to the instance', function () {
+            var musician = {
+                play: function play() {
+                    return this.name + ' is playing...';
+                },
+                compose: function () {
+                    return this.name + ' is composing...';
+                }
+            };
+            this.mechi.mixin(musician);
+            expect(this.mechi.play).to.eql(musician.play);
+            expect(this.mechi.compose).to.eql(musician.compose);
+        });
+        it('should be inherited', function () {
+            expect(this.mechi.hasOwnProperty('mixin')).to.be.false;
         });
     });
 });

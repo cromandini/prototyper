@@ -241,18 +241,4 @@ describe('Prototyper', function () {
             expect(Object.getOwnPropertyDescriptor(Prototyper, 'mixin').enumerable).to.be.true;
         });
     });
-
-    describe('#clone()', function () {
-        it('should fail', function () {
-            expect(clone).to.throw(TypeError);
-            expect(clone).to.throw(/Object \[class Prototyper\] cannot be cloned, try extend/);
-
-            function clone() {
-                Prototyper.clone();
-            }
-        });
-        it('should be enumerable', function () {
-            expect(Object.getOwnPropertyDescriptor(Prototyper, 'clone').enumerable).to.be.true;
-        });
-    });
 });
