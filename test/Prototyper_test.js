@@ -164,20 +164,6 @@ describe('Prototyper', function () {
         });
     });
 
-    describe('#create()', function () {
-        it('should fail', function () {
-            expect(create).to.throw(/Object \[class Prototyper\] cannot create instances/);
-            expect(create).to.throw(TypeError);
-
-            function create() {
-                Prototyper.create();
-            }
-        });
-        it('should be enumerable', function () {
-            expect(Object.getOwnPropertyDescriptor(Prototyper, 'create').enumerable).to.be.true;
-        });
-    });
-
     describe('#defineIVar(property, descriptor)', function () {
         it('should fail', function () {
             expect(defineIVar).to.throw(TypeError);

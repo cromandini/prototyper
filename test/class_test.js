@@ -131,32 +131,33 @@ describe('Class', function () {
         });
     });
 
-    describe('#iSerial', function () {
-        it('should get incremental serial numbers starting from 1', function () {
-            expect(Developer.iSerial).to.equal(1);
-            expect(Developer.iSerial).to.equal(2);
-            expect(Developer.iSerial).to.equal(3);
-            expect(Developer.iSerial).to.equal(4);
+    describe('#instanceCount', function () {
+        it('should get the count of instances created by the class', function () {
+            expect(Developer.instanceCount).to.equal(0);
+            Developer.create('Foo');
+            expect(Developer.instanceCount).to.equal(1);
+            Developer.create('Foo');
+            expect(Developer.instanceCount).to.equal(2);
         });
         it('should be an accessor with only a getter', function () {
-            var descriptor = Object.getOwnPropertyDescriptor(Developer, 'iSerial');
+            var descriptor = Object.getOwnPropertyDescriptor(Developer, 'instanceCount');
             var setISerial = function () {
-                Developer.iSerial = 11;
+                Developer.instanceCount = 11;
             };
             expect(descriptor.get).to.be.a('function');
             expect(descriptor.set).to.be.undefined;
             expect(setISerial).to.throw(TypeError);
-            expect(setISerial).to.throw(/Cannot set property iSerial .* which has only a getter/);
+            expect(setISerial).to.throw(/Cannot set property instanceCount .* which has only a getter/);
         });
         it('should be enumerable', function () {
-            expect(Object.getOwnPropertyDescriptor(Developer, 'iSerial').enumerable).to.be.true;
+            expect(Object.getOwnPropertyDescriptor(Developer, 'instanceCount').enumerable).to.be.true;
         });
         it('should be non-configurable', function () {
-            expect(Object.getOwnPropertyDescriptor(Developer, 'iSerial').configurable).to.be.false;
+            expect(Object.getOwnPropertyDescriptor(Developer, 'instanceCount').configurable).to.be.false;
         });
         it('should be owned by the object', function () {
-            expect(Person.hasOwnProperty('iVars')).to.be.true;
-            expect(Developer.hasOwnProperty('iVars')).to.be.true;
+            expect(Person.hasOwnProperty('instanceCount')).to.be.true;
+            expect(Developer.hasOwnProperty('instanceCount')).to.be.true;
         });
     });
 
@@ -208,17 +209,21 @@ describe('Class', function () {
             expect(foo).to.contain.keys(Object.keys(Developer.iVars));
             expect(foo).to.contain.keys(Object.keys(JavascriptDeveloper.iVars));
         });
-        it('should be inherited', function () {
-            expect(Person.hasOwnProperty('create')).to.be.false;
-            expect(Developer.hasOwnProperty('create')).to.be.false;
+        it('should be owned by the object', function () {
+            expect(Person.hasOwnProperty('create')).to.be.true;
+            expect(Developer.hasOwnProperty('create')).to.be.true;
         });
         describe('instance#objectName', function () {
-            it('should be a string formed by Class#objectName in lowercase and Class#iSerial', function () {
-                expect(Developer.create('Foo').objectName).to.equal('developer-6');
-                expect(Developer.create('Foo').objectName).to.equal('developer-7');
-                expect(JavascriptDeveloper.create('Foo').objectName).to.equal('javascriptdeveloper-2');
-                expect(JavascriptDeveloper.create('Foo').objectName).to.equal('javascriptdeveloper-3');
-                expect(JavascriptDeveloper.create('Foo').objectName).to.equal('javascriptdeveloper-4');
+            it('should be a string formed by Class#objectName (lowercase) and Class#instanceCount', function () {
+                var devCount = Developer.instanceCount;
+                expect(Developer.create('Foo').objectName).to.equal('developer-' + (devCount + 1) );
+                expect(Developer.create('Foo').objectName).to.equal('developer-' + (devCount + 2) );
+                var JSDev = JavascriptDeveloper;
+                var jsDevCount = JSDev.instanceCount;
+                expect(JSDev.create('Foo').objectName).to.equal('javascriptdeveloper-' + (jsDevCount + 1) );
+                expect(JSDev.create('Foo').objectName).to.equal('javascriptdeveloper-' + (jsDevCount + 2) );
+                expect(JSDev.create('Foo').objectName).to.equal('javascriptdeveloper-' + (jsDevCount + 3) );
+                expect(JSDev.create('Foo').objectName).to.equal('javascriptdeveloper-' + (jsDevCount + 4) );
             });
         });
         describe('instance#initialize()', function () {

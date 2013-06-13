@@ -13,14 +13,14 @@ describe('instance', function () {
     });
 
     describe('#objectName', function () {
-        it('should be based on super#objectName and super#iSerial', function () {
-            var serial = Person.iSerial;
+        it('should be based on super#objectName and super#instanceCount', function () {
+            var count = Person.instanceCount;
             var createFoo = function () {
                 return Person.create('Foo');
             };
-            expect(createFoo().objectName).to.equal('person-' + (serial + 1));
-            expect(createFoo().objectName).to.equal('person-' + (serial + 2));
-            expect(createFoo().objectName).to.equal('person-' + (serial + 3));
+            expect(createFoo().objectName).to.equal('person-' + (count + 1));
+            expect(createFoo().objectName).to.equal('person-' + (count + 2));
+            expect(createFoo().objectName).to.equal('person-' + (count + 3));
         });
         it('should be readonly', function () {
             expect(Object.getOwnPropertyDescriptor(this.mechi, 'objectName').writable).to.be.false;
@@ -97,13 +97,30 @@ describe('instance', function () {
     describe('#iVars', function () {
         it('should be undefined', function () {
             expect(this.mechi.iVars).to.be.undefined;
+            expect(this.mechi.super.iVars).to.not.be.undefined;
         });
-        it('should be inherited', function () {
+        it('should not be owned by the instance', function () {
             expect(this.mechi.hasOwnProperty('iVars')).to.be.false;
         });
     });
-});
 
-//describe('#initialize()', function () {
-//
-//});   bcv13   BCVXZ1 vnm,c.,l nbn m  xx
+    describe('#instanceCount', function () {
+        it('should be undefined', function () {
+            expect(this.mechi.instanceCount).to.be.undefined;
+            expect(this.mechi.super.instanceCount).to.not.be.undefined;
+        });
+        it('should not be owned by the instance', function () {
+            expect(this.mechi.hasOwnProperty('instanceCount')).to.be.false;
+        });
+    });
+
+    describe('#toString()', function () {
+        it('should return a string representing the value of the object', function () {
+            var count = Person.instanceCount;
+            expect(this.mechi.toString()).to.equal('[instance person-' + count + ']');
+        });
+        it('should be inherited', function () {
+            expect(this.mechi.hasOwnProperty('toString')).to.be.false;
+        });
+    });
+});
