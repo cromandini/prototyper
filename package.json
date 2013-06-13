@@ -5,8 +5,7 @@
     "homepage": "http://cromandini.github.io/prototyper",
     "author": {
         "name": "Claudio Romandini",
-        "email": "cromandini@me.com",
-        "url": "http://cromandini.me"
+        "email": "cromandini@me.com"
     },
     "repository": {
         "type": "git",
@@ -26,8 +25,8 @@
         "test": "./bin/grunt test"
     },
     "engines": {
-        "node": ">= 0.10.5",
-        "npm": ">= 1.2.21"
+        "node": ">= 0.10.7",
+        "npm": ">= 1.2.18"
     },
     "devDependencies": {
         "grunt": "~0.4.1",
