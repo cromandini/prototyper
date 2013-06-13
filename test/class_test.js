@@ -103,7 +103,7 @@ describe('Class', function () {
     });
 
     describe('#iVars', function () {
-        it('should be an object', function () {
+        it('should get an object', function () {
             expect(Prototyper.extend('Foo').iVars).to.be.an('object');
         });
         it('should be empty by default', function () {
@@ -115,8 +115,9 @@ describe('Class', function () {
             expect(Developer.iVars.languages).to.eql({});
             expect(Developer.iVars.mainLanguage).to.eql({ name: 'C', hours: 10 });
         });
-        it('should be readonly', function () {
-            expect(Object.getOwnPropertyDescriptor(Person, 'iVars').writable).to.be.false;
+        it('should be a getter only accessor', function () {
+            expect(Object.getOwnPropertyDescriptor(Person, 'iVars').get).to.be.a('function');
+            expect(Object.getOwnPropertyDescriptor(Person, 'iVars').set).to.be.undefined;
         });
         it('should be enumerable', function () {
             expect(Object.getOwnPropertyDescriptor(Person, 'iVars').enumerable).to.be.true;
