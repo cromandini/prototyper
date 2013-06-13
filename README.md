@@ -3,6 +3,8 @@ prototyper
 
 Base object for using prototypal inheritance in javascript. Is has a strong dependence on ES5.
 
+[http://cromandini.github.io/prototyper/](http://cromandini.github.io/prototyper/)
+
 ## Getting Started
 
 Install the module with: `npm install prototyper`
