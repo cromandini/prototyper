@@ -16,22 +16,21 @@ module.exports = Prototyper.extend('Person',
             this.name = name;
         },
         sayName: function sayName() {
-            console.log('My name is ' + this.name);
+            return 'My name is ' + this.name;
         },
         get isHappy() {
             return this.happiness >= this.happinessThreshold;
-        },
-        beHappier: function beHappier() {
-            this.happiness += 10;
         }
     },
     // descriptors
     {
         iVars: {
-            happinessThreshold: { writable: false }
+            happinessThreshold: {
+                writable: false
+            }
         },
         cVars: {
-            beHappier: {
+            sayName: {
                 writable: false,
                 configurable: false
             }
