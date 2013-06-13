@@ -3,69 +3,133 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
     <title>Prototyper by cromandini</title>
   </head>
 
   <body>
-    <div id="container">
+    <header>
       <div class="inner">
+        <h1>Prototyper</h1>
+        <h2>Base object for using prototypal inheritance in javascript</h2>
+        <a href="https://github.com/cromandini/prototyper" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
 
-        <header>
-          <h1>Prototyper</h1>
-          <h2>Base object for using prototypal inheritance in javascript</h2>
-        </header>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="prototyper" class="anchor" href="#prototyper"><span class="octicon octicon-link"></span></a>prototyper</h1>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/cromandini/prototyper/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/cromandini/prototyper/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/cromandini/prototyper" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
+<p>Base object for using prototypal inheritance in javascript. Is has a strong dependence on ES5.</p>
 
-        <hr>
+<h2>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
 
-        <section id="main_content">
-          <h3>Welcome to GitHub Pages.</h3>
+<p>Install the module with: <code>npm install prototyper</code></p>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<pre><code>'use strict';
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+var Prototyper = require('../lib/Prototyper');
+
+var Person = Prototyper.extend('Person',
+    // iVars
+    {
+        name: 'Unnamed',
+        happiness: 10,
+        happinessThreshold: 100
+    },
+    // cVars
+    {
+        initialize: function initialize(name) {
+            if (!name) throw new Error('name is required');
+            this.name = name;
+        },
+        sayName: function sayName() {
+            return 'My name is ' + this.name;
+        },
+        get isHappy() {
+            return this.happiness &gt;= this.happinessThreshold;
+        }
+    },
+    // descriptors
+    {
+        iVars: {
+            happinessThreshold: {
+                writable: false
+            }
+        },
+        cVars: {
+            sayName: {
+                writable: false,
+                configurable: false
+            }
+        }
+    }
+);
+
+var mechi = Person.create('Mechi');
+
+mechi.sayName() // -&gt; 'My name is Mechi'
+mechi.name // -&gt; 'Mechi'
+mechi.isHappy // -&gt; false
+mechi.happiness = 200;
+mechi.isHappy // -&gt; true
+mechi.happinessThreshold = 0; // -&gt; TypeError: Cannot assign to read only property
+                                    'happinessThreshold' of [instance person-1]
+
+mechi.super.objectName // -&gt; 'Person'
+mechi.super.toString() // -&gt; '[class Person]'
+mechi.super.super.objectName // -&gt; 'Prototyper'
+mechi.super.super.toString() // -&gt; '[class Prototyper]'
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<h2>
+<a name="to-do-list" class="anchor" href="#to-do-list"><span class="octicon octicon-link"></span></a>To-do list</h2>
 
-<h3>Designer Templates</h3>
+<ul>
+<li>Documentation</li>
+<li>More examples</li>
+<li>Browser version</li>
+</ul><h2>
+<a name="test" class="anchor" href="#test"><span class="octicon octicon-link"></span></a>Test</h2>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>Run the command: <code>npm test</code></p>
 
-<h3>Rather Drive Stick?</h3>
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>Copyright (c) 2013 Claudio Romandini<br>
+Licensed under the MIT license.</p>
         </section>
 
-        <footer>
-          Prototyper is maintained by <a href="https://github.com/cromandini">cromandini</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
+        <aside id="sidebar">
+          <a href="https://github.com/cromandini/prototyper/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/cromandini/prototyper/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
 
-        
+          <p class="repo-owner"><a href="https://github.com/cromandini/prototyper"></a> is maintained by <a href="https://github.com/cromandini">cromandini</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
       </div>
     </div>
+
+  
   </body>
 </html>
