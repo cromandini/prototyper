@@ -11,7 +11,7 @@ Install the module with: `npm install prototyper`
 
 	'use strict';
 	
-	var Prototyper = require('../lib/Prototyper');
+	var Prototyper = require('prototyper').Prototyper;
 	
 	var Person = Prototyper.extend('Person',
 		// iVars
